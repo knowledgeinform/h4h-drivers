@@ -1,0 +1,11 @@
+source:
+  type: video_file
+  value: dummy_ordinance.avi
+  source_id: dummy_ordinance_video
+
+sink:
+  type: atak
+
+runtime:
+  display: false
+  # max_frames: 200

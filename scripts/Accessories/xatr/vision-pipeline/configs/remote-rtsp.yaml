@@ -1,0 +1,18 @@
+source:
+  type: rtsp
+  ##value: rtsp://localhost:8554/mystream  ## for local host testing with webcam
+  # value: rtsp://10.131.6.189:8554/preview ## for new depth camera
+  value: rtsp://localhost:8554/preview  ## for new depth camera on same machine
+  source_id: orin_rtsp_cam_01
+
+model:
+  confidence: 0.4
+  classes_of_interest:
+ #   - sports ball
+
+sink:
+  type: atak
+
+runtime:
+  display: false
+  # max_frames: 200

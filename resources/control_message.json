@@ -1,0 +1,15 @@
+{
+    "messageType":  "control", 
+    "messageData": {
+        "name": "<string>",
+        "linear_x": "<float>",
+        "linear_y": "<float>",
+        "linear_z": "<float>",
+        "angular_z": "<float>",
+        "takeoff": "<bool", 
+        "land": "bool", 
+        "rtl": "bool" ,
+        "offboard": "bool",
+        "arm": "bool"
+    }
+}

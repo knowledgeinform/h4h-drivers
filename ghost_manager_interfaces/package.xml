@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>ghost_manager_interfaces</name>
+  <version>9.0.5</version>
+  <description>Messages for the ghost_manger package</description>
+  <maintainer email="hunter.allen@ghostrobotics.io">Hunter L. Allen</maintainer>
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>
+  <buildtool_depend>rosidl_default_generator</buildtool_depend>
+
+  <depend>rosidl_default_runtime</depend>
+  <depend>rosidl_default_generators</depend>
+  <depend>std_msgs</depend>
+
+  <member_of_group>rosidl_interface_packages</member_of_group>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

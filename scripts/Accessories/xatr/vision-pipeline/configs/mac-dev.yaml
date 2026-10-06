@@ -1,0 +1,18 @@
+source:
+  ## type: webcam
+  type: rtsp
+  value: 0
+  source_id: macbook_camera
+
+model:
+  path: models/yolo26s.pt
+  confidence: 0.4
+  classes_of_interest:
+    - sports ball
+
+sink:
+  type: mock
+
+runtime:
+  display: true
+  max_frames: 200

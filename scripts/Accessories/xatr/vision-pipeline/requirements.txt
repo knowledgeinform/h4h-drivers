@@ -1,0 +1,6 @@
+pyyaml
+git+https://github.com/kylesayrs/ATAK_push_cots
+h5py
+scipy
+tqdm
+pyzmq

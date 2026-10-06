@@ -1,0 +1,37 @@
+# ignore pycache files
+*.pyc
+
+# ignore local h4h_msgs builds
+h4h_msgs/build
+h4h_msgs/install
+h4h_msgs/log
+
+# ignore the dummy ordinance test video
+dummy_ordinance.avi
+
+# ignore large weights files (get it from Box)
+# *.weights
+
+# ignore local logging files
+file_logs/*
+
+# ignore deleteme files
+deleteme*
+
+### Exceptions
+
+# this file keeps the folder alive
+!file_logs/DO_NOT_DELETE.txt
+
+# NOTES, DELETE LATER
+# s,d,k all work while the drone is in position mode
+# -1 lin_x, -1 ang_z, -1 lin_z
+# the setpoint must be somewhere weird
+# after typing this the system switched to "manual control loss"
+# not sure how to clear the failsafe
+
+# after setting setpoints to [-1000, 1000]
+# Attempting to switch to Position mode results in a "manual control loss"
+# angular z is swapped for some reason on the keyboard
+# holding linear_z at -1000 results in it holding altitude
+# letting go and holding at zero makes it fall

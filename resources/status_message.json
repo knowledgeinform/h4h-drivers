@@ -1,0 +1,13 @@
+{
+    "messageType":  "status", 
+    "messageData": {
+        "name": "<string>",
+        "lat": "<float>",
+        "lon": "<float>",
+        "alt": "<float>",
+        "heading": "<float>",
+        "powerLevel": "<bool", 
+        "flying": "bool", 
+        "landed": "bool" 
+    }
+}

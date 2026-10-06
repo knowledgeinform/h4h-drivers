@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <name>iop_msgs</name>
+  <version>0.0.5</version>
+  <description>
+    Package containing messages and services pertaining to IOP.
+  </description>
+  <maintainer email="bponsler@endeavorrobotics.com">Brett Ponsler</maintainer>
+  <license>Endeavor Robotics</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>jts_node_manager</build_depend>
+
+  <run_depend>message_generation</run_depend>
+  <run_depend>std_msgs</run_depend>
+  <run_depend>jts_node_manager</run_depend>
+</package>

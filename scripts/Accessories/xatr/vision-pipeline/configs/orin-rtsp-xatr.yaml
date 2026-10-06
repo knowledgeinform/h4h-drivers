@@ -1,0 +1,18 @@
+source:
+  type: rtsp
+  ##value: rtsp://localhost:8554/mystream  ## for local host testing
+  value: rtsp://10.131.6.189:8554/preview ## for new depth camera
+  source_id: orin_rtsp_cam_01
+
+model:
+  path: models/yolo26s.pt
+  confidence: 0.4
+  classes_of_interest:
+    - sports ball
+
+sink:
+  type: xatr
+
+runtime:
+  display: false
+  max_frames: 200

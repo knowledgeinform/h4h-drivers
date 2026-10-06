@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>resource_controller_msgs</name>
+  <version>0.0.2</version>
+  <description>
+    Package containing messages and services pertaining to the resource controller package.
+  </description>
+  <maintainer email="bponsler@endeavorrobotics.com">Brett Ponsler</maintainer>
+  <license>Endeavor Robotics</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>message_generation</run_depend>
+  <run_depend>std_msgs</run_depend>
+</package>

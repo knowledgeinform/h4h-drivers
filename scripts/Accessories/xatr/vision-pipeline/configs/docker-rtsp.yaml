@@ -1,0 +1,16 @@
+source:
+  type: rtsp
+  value: rtsp://127.0.0.1:8554/test
+  source_id: rtsp_cam_01
+
+model:
+  path: models/yolov8n.pt
+  confidence: 0.5
+  classes_of_interest: []
+
+sink:
+  type: mock
+
+runtime:
+  display: false
+  max_frames: 200

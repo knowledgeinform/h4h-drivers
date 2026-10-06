@@ -1,0 +1,376 @@
+services:
+
+  ### Controller Interfaces ###
+
+  zmq-input-1:
+    image: zmq-input:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      PRIORITY: 1
+      ZMQ_IP: "192.168.168.27" #  UCC
+      ZMQ_PORT: 5551
+      CONTROL_RATE_HZ: 10
+
+  zmq-input-2:
+    image: zmq-input:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      PRIORITY: 1
+      ZMQ_IP: "192.168.168.27" #  UCC
+      ZMQ_PORT: 5552
+      CONTROL_RATE_HZ: 10
+
+  zmq-input-3:
+    image: zmq-input:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      PRIORITY: 1
+      ZMQ_IP: "192.168.168.27" #  UCC
+      ZMQ_PORT: 5553
+      CONTROL_RATE_HZ: 10
+
+  zmq-input-4:
+    image: zmq-input:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      PRIORITY: 1
+      ZMQ_IP: "192.168.168.27" #  UCC
+      ZMQ_PORT: 5554
+      CONTROL_RATE_HZ: 10
+
+  keyboard-debug-input:
+    image: zmq-input:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      PRIORITY: 1
+      ZMQ_PORT: 5581
+      CONTROL_RATE_HZ: 10
+      ZMQ_IP: "127.0.0.1" # Local Keyboard Test
+
+
+  ### Vehicle Interfaces
+
+  # Mavlink UAV
+  mav-uav-controller-c100:
+    image: mav-uav-controller:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/vehicles/mav_uav.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      ROS_NAMESPACE: "h4h_rad_c100"
+      MAV_ADDRESS: "udpin:0.0.0.0:14552" # serial or IP address # udpin:0.0.0.0:14550 is specifically how QGC connects to things
+      MAX_HORIZ_SPEED: 1000 # no unit [0,1000]
+      MAX_VERT_SPEED: 500 # no unit [0,500]
+      MAX_TURN_SPEED: 800 # no unit [0,1000]  
+      BAUDRATE: 0 # frequency (only matters for serial connections)
+      TAKEOFF_HEIGHT_METERS: 10
+      FLIGHT_CONTROL_IS_PX4: True
+      DISABLE_FAILSAFE: True
+      STATUS_PORT: 5561
+      VISION_PORT: 5591
+
+  # Mavlink UAV
+  mav-uav-controller-teal:
+    image: mav-uav-controller:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/vehicles/mav_uav.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      ROS_NAMESPACE: "h4h_rad_teal"
+      MAV_ADDRESS: "udpin:0.0.0.0:14562" # serial or IP address # udpin:0.0.0.0:14550 is specifically how QGC connects to things
+      MAX_HORIZ_SPEED: 1000 # no unit [0,1000]
+      MAX_VERT_SPEED: 500 # no unit [0,500]
+      MAX_TURN_SPEED: 800 # no unit [0,1000]  
+      BAUDRATE: 0 # frequency (only matters for serial connections)
+      TAKEOFF_HEIGHT_METERS: 10
+      FLIGHT_CONTROL_IS_PX4: True
+      DISABLE_FAILSAFE: True
+      STATUS_PORT: 5562
+      VISION_PORT: 5592
+
+  # MTRS
+  # ros-to-zmq-mtrs-driver:
+  #   image: ros-to-zmq-mtrs-driver:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/vehicles/ros_to_zmq_mtrs_driver.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     GRIPPER_NAME: "h4h_mtrs_gripper"
+  #     CHASSIS_NAME: "h4h_mtrs_chassis"
+  #     ZMQ_GRIPPER_PORT: 4071
+  #     ZMQ_CHASSIS_PORT: 4072
+  #     MAX_PUBLISH_RATE: 5 # maximum ZMQ publish rate (hz) # CAREFUL: this rate is currently getting doubled! # TODO: Separate ZMQ PORTS for each control mode
+
+  # zmq-mtrs-driver:
+  #   image: zmq-mtrs-driver:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/vehicles/zmq_mtrs_driver.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     ROS_IP: 192.168.1.20
+  #     ROS_MASTER_URI: http://192.168.1.1:11311
+  #     GRIPPER_NAME: "h4h_mtrs_gripper"
+  #     CHASSIS_NAME: "h4h_mtrs_chassis"
+  #     ZMQ_GRIPPER_PORT: 4071
+  #     ZMQ_CHASSIS_PORT: 4072
+  #     PRIORITY: 4 # message priority to the MTRS2
+  #     MAX_EFFORT: 60 # there's also an internal max velocity limit on the MTRS2 that will compete with this
+  #   extra_hosts:
+  #     - "er-mbu.endeavorrobotics.com:192.168.1.1"  
+
+
+  ### Accessories ###
+
+  mavproxy-server-c100:
+    image: mavproxy-server:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/mavproxy-server.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    stdin_open: true
+    tty: true
+    environment:
+      MAVPROXY_MASTER_IP: "0.0.0.0:14550"
+      OUT_IP_ONE: "udp:127.0.0.1:14551" # local QGC
+      OUT_IP_TWO: "udp:127.0.0.1:14552" # local controller
+      OUT_IP_THREE: "udp:192.168.168.91:14550" # C100 controller
+
+  # mavproxy-server-teal:
+  #   image: mavproxy-server:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/mavproxy-server.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   stdin_open: true
+  #   tty: true
+  #   environment:
+  #     MAVPROXY_MASTER_IP: "0.0.0.0:14560"
+  #     OUT_IP_ONE: "udp:127.0.0.1:14561" # local QGC
+  #     OUT_IP_TWO: "udp:127.0.0.1:14562" # local controller
+  #     OUT_IP_THREE: "udp:127.0.0.1:14563" # unused
+
+  # ros-to-rtsp-stream-v60:
+  #   image: ros-to-rtsp-stream-v60:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/accessories/ros_to_rtsp_stream.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     # IMAGE_TOPIC: "/mcu/state/rs4/rgb" # V60
+  #     IMAGE_TOPIC: "/dummy_img_output" # dummy-ros-img-publisher
+  #     WIDTH: 640
+  #     HEIGHT: 480
+  #     FPS: 15
+  #     PORT: 8551
+   
+
+  # yolo-detector:
+  #   image: yolo-detector:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/accessories/yolo_detector.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+
+  # dummy-image-test:
+  #   image: dummy-image-test:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/accessories/dummy_image_test.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host  
+
+  # dummy-ros-img-publisher:
+  #   image: dummy-ros-img-publisher:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/accessories/dummy_ros_img_publisher.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host  
+
+  # gps:
+  #   image: gps:${DOCKER_IMAGE_TAG}
+  #   devices:
+  #     - "/dev/ttyUSB0:/dev/ttyUSB0"
+  #   build:
+  #     dockerfile: dockerfiles/accessories/gps.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: unless-stopped
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     GPS_PLATFORM_NAME: "h4h_mtrs_chassis"
+  #     GPS_TOPIC_NAME: "/h4h_mtrs_chassis/gps/fix"
+  #     ZMQ_GPS_PORT: 5562
+
+#   gps-sim:
+#     image: gps:${DOCKER_IMAGE_TAG}
+#     build:
+#       dockerfile: dockerfiles/accessories/gps.dockerfile
+#       args:
+#         IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+#     restart: no
+#     network_mode: host
+#     ipc: host
+#     environment:
+#       GPS_PLATFORM_NAME: "h4h_mtrs_chassis"
+#       GPS_TOPIC_NAME: "/h4h_mtrs_chassis/gps/fix"
+#       ZMQ_GPS_PORT: 5562
+
+  # cot-msg-bridge:
+  #   image: cot-msg-bridge:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/accessories/cotMsgs.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   volumes:
+  #     - .:/home/cotMsg_ws
+
+  vision-pipeline-rtsp:
+      image: vision-pipe
+      build:
+          dockerfile: dockerfiles/accessories/vision-pipe.dockerfile
+      command: /bin/bash -c "source /opt/XATR/xatr.env; cd vision-pipeline; python3 main.py"
+      restart: no
+      network_mode: host
+      runtime: nvidia
+      ipc: host
+      tty: true
+      stdin_open: true
+      environment:
+          STATUS_PORT: 5591
+          ATAK_IP_ADDRESS: "192.168.1.123"
+          ATAK_PORT: 8087
+          # APP_CONFIG: "configs/remote-rtsp-teal.yaml"
+          # APP_CONFIG: "configs/remote-rtsp-c100.yaml"
+          APP_CONFIG: "configs/remote-rtsp.yaml"
+          # APP_CONFIG: "configs/dummy-video-test.yaml"
+          XATR_CONFIG: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.atrcfg"
+          XATR_CONFIG_NAMES: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.names"
+      volumes:
+        - /tmp:/tmp
+        - ./scripts/Accessories/xatr/vision-pipeline/configs:/xatr_opencv/opencv/build/vision-pipeline/configs/
+        - ./XATR/config:/opt/XATR/config
+        - ./dummy_ordinance.avi:/xatr_opencv/opencv/build/vision-pipeline/dummy_ordinance.avi
+      devices:
+        - /dev/nvhost-nvdec
+        - /dev/nvhost-vic
+
+  # vision-pipeline-videofile:
+  #     image: vision-pipe
+  #     build:
+  #         dockerfile: dockerfiles/accessories/vision-pipe.dockerfile
+  #     command: /bin/bash -c "source /opt/XATR/xatr.env; cd vision-pipeline; python3 main.py"
+  #     # command: /bin/bash -c "sleep 99999999"
+  #     restart: unless-stopped
+  #     network_mode: host
+  #     runtime: nvidia
+  #     ipc: host
+  #     tty: true
+  #     stdin_open: true
+  #     volumes:
+  #         # - /tmp/.X11-unix:/temp/.X11-unix # for displaying the detections on the host display (comment out for headless)
+  #       - ./scripts/Accessories/xatr/vision-pipeline/configs:/xatr_opencv/opencv/build/vision-pipeline/configs/
+  #       - ./XATR/config:/opt/XATR/config
+  #     environment:
+  #         APP_CONFIG: "configs/cellphone-test.yaml" # local video file for testing
+  #         XATR_CONFIG: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.atrcfg"
+  #         XATR_CONFIG_NAMES: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.names"
+  #         # DISPLAY: ":0" # for displaying the detections on the host display (comment out for headless)
+
+  # this container spins up a PX4 SITL (connect via QGCS)
+  # it rebuilds the SITL code every time it spins up so it's very slow to start
+  h4h-px4-sim:
+    image: h4h-sim-base:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/h4h-sim-base.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    command: /bin/bash -c "cd PX4-Autopilot; make px4_sitl gz_x500"
+    restart: no
+    network_mode: host
+    ipc: host
+    runtime: nvidia # comment this out for machines that don't have nvidia gpu's
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+      DISPLAY: ":1"
+    profiles: ["sim"]
+
+  # this container spins up a dummy gps status message
+  # mobile-gps-sim:
+  #   image: mobile-gps-sim:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/accessories/sim_gps.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     ZMQ_GPS_PORT: 5571

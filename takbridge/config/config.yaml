@@ -1,0 +1,46 @@
+# TAK-Server Config
+tak_connection:
+  tak__parameters:
+    COT_URL: "tls://192.168.168.94:8089"
+    PYTAK_TLS_DONT_VERIFY: "True"
+    PYTAK_TLS_CLIENT_CERT: "user1.p12"
+    PYTAK_TLS_CLIENT_PASSWORD: "atakatak"
+
+# Valid Callsigns
+# Husky|V60|GraySeeker|MRZR|C100|MTRS|Traxxas|HarrisT7
+
+# Ghost Robotic Vision 60 (V60)
+v60_publisher:
+  ros__parameters:
+    uid: "V60"
+    callsign: "V60"
+    pos_topic: "/gx5/gnss1/fix"
+    compass_topic: "/gx5/compass"
+    # callsign_pattern: "^(Husky|Ghost|GraySeeker|MRZR|C100|HarrisT7\\d{3})$"
+  
+# C-100 Drone
+c100_publisher:
+  ros__parameters:
+    uid: "C100"
+    callsign: "C100"
+    pos_topic: "/rlac_c100/global_position/global"
+    compass_topic: "/gx5/compass"
+    # callsign_pattern: "^(Husky|Ghost|GraySeeker|MRZR|C100|HarrisT7\\d{3})$"
+  
+# Clearpath Husky UGV
+husky_publisher:
+  ros__parameters:
+    uid: "Husky"
+    callsign: "Husky"
+    pos_topic: "/rlac_husky/platform/odom"
+    compass_topic: "/gx5/compass"
+    # callsign_pattern: "^(Husky|Ghost|GraySeeker|MRZR|C100|HarrisT7\\d{3})$"
+
+# MAV UGV
+mav_ugv_publisher:
+  ros__parameters:
+    uid: "Traxxas"
+    callsign: "Traxxas"
+    pos_topic: "/mavros/global_position/global"
+    compass_topic: "/gx5/compass"
+    # callsign_pattern: "^(Husky|Ghost|GraySeeker|MRZR|C100|HarrisT7\\d{3})$"

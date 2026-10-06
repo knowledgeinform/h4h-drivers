@@ -1,0 +1,15 @@
+source:
+  type: video_file
+  value: cellphone.avi ## for new depth camera
+  source_id: cellphone_test_vid
+
+model:
+  confidence: 0.5
+  classes_of_interest:
+    - cell phone
+
+sink:
+  type: mock
+
+runtime:
+  display: false

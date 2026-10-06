@@ -1,0 +1,38 @@
+# Copyright Endeavor Robotics 2016. Unpublished --
+# Rights Reserved Under the Copyright Laws of the United States.
+# Any Reproduction or Dissemination of this Copy is Strictly Prohibited.
+# U.S. Gov't employees should consider this file a trade secret
+# under 18 USC 1905. Contact Endeavor Robotics for details.
+#
+# COMMERCIAL ITEM
+# The technical data and computer software contained/transmitted herein is
+# proprietary to Endeavor Robotics, is Endeavor Robotics' commercial
+# technical data and commercial computer software and computer software
+# documentation, and may not be used, disclosed, reproduced, modified,
+# performed, or displayed except as permitted by Endeavor Robotics'
+# standard commercial license for this Data or computer software. United
+# States Government license rights are limited to those rights set forth
+# in Endeavor Robotics' standard commercial license.
+
+# The RegisterResources service is used by a ResourceController to notify
+# the RobotResourceLocator of a set of resources managed by the resource controller.
+#
+# The service request provides:
+#     - the topic for the service which determines if the resource
+#       controller is still alive
+#     - the list of ResourceIdentifiers for all resources managed
+#       by the resource controller
+
+# The topic for the service which determines if the resource
+# controller is still alive
+string is_alive_service_topic
+
+# The list of ResourceIdentifiers for all resources managed
+# by the resource controller
+resource_controller_msgs/ResourceIdentifier[] resource
+---
+
+# A list of bools indicating whether each of the resources was
+# successfully registered with the resource locator or not.
+# Note: response.success.size() == request.resource.size()
+bool[] success

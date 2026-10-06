@@ -1,0 +1,21 @@
+source:
+  type: rtsp
+  ##value: rtsp://localhost:8554/mystream  ## for local host testing
+  # value: rtsp://10.131.6.189:8554/preview ## for new depth camera
+  # value: rtsp://localhost:8554/preview  ## for new depth camera on same machine
+  value: rtsp://192.168.168.20:8900/live  ## for C100
+  source_id: c100_rtsp_cam_01
+
+model:
+  confidence: 0.4
+  classes_of_interest:
+ #   - sports ball
+
+sink:
+  type: atak
+
+runtime:
+  display: false
+  # max_frames: 200
+
+vehicle_status_ip: "tcp://localhost:5571" # for testing

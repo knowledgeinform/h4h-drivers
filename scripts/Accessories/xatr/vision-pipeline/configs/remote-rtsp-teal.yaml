@@ -1,0 +1,17 @@
+source:
+  type: rtsp
+  value: rtsp://192.168.168.30:8555/video200-klv ## <INSERT TEAL'S RTSP STREAM HERE>
+  source_id: teal_rtsp_cam
+
+model:
+  confidence: 0.5
+  classes_of_interest:
+    - person
+    - backpack
+    - chair
+
+sink:
+  type: atak
+
+runtime:
+  display: false
