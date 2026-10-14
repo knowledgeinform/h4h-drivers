@@ -9,6 +9,9 @@ h4h_msgs/log
 # ignore the dummy ordinance test video
 dummy_ordinance.avi
 
+# ignore the vision-pipe-recordings folder
+vision-pipe-recordings/*
+
 # ignore large weights files (get it from Box)
 # *.weights
 
@@ -22,6 +25,11 @@ deleteme*
 
 # this file keeps the folder alive
 !file_logs/DO_NOT_DELETE.txt
+
+# ignore video files
+*.avi
+*.mp4
+*.mkv
 
 # NOTES, DELETE LATER
 # s,d,k all work while the drone is in position mode

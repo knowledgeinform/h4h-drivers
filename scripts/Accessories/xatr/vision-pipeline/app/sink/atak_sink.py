@@ -14,8 +14,8 @@ class AtakSink(DetectionSink):
     def create_msg(self, gps_data:dict, detection: dict):
          return tak.CotConfig(
             uid=str(uuid.uuid1()),
-            latitude=gps_data["messageData"]["lat"],
-            longitude=gps_data["messageData"]["lon"],
+            latitude=gps_data["lat"][1],
+            longitude=gps_data["lon"][1],
             callsign=detection["label"],
             sender_callsign="Vision_Pipeline",
         )

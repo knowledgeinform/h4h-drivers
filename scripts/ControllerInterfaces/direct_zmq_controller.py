@@ -52,6 +52,7 @@ class ZMQControllerInterface(ControllerSixDofBase):
 		# switch on message type
 		self.processControl(msg["movement"]) # dictionary of linear x,y,z and angular x,y,z
 		self.processActions(msg["actions"]) # list of strings
+		self.print("Processing Actions: ", msg["actions"])
 
 if __name__ == "__main__":
 	# get the connection info

@@ -14,8 +14,8 @@ import commons.simple_zmq_lib as zlib
 from commons.h4h.vehicle_interface import MavMultirotorBase
 
 def renameDict(dict:dict, curr_name:str, new_name:str):
-	dict["new_name"] = dict["curr_name"]
-	del dict["curr_name"]
+	dict[new_name] = dict[curr_name]
+	del dict[curr_name]
 
 class RLACMultirotorControl(MavMultirotorBase):
 	""" concrete implementation for Mavlink multirotor vehicle control for RLAC """
@@ -97,7 +97,7 @@ class RLACMultirotorControl(MavMultirotorBase):
 
 		# publish
 		self.orientation_publisher.publish(data)
-		print(f"Published Orientation Message: {data}")
+		# print(f"Published Orientation Message: {data}")
 
 
 		# DEBUG: try sending mission plan to drone

@@ -40,6 +40,51 @@ class SinkPushQueue:
             msg = self.message_queue.get()
             self.sink.publish(msg)
 
+class DataRecorder:
+    """ 
+    Saves gps data and video frames to disk.
+    savedir should be a volume-mounted folder specified in docker-compose.yml
+    """
+    def __init__(self, savedir:str):
+        # avoids extra load time if we're not using the DataRecorder
+        import skvideo.io
+
+        # open up a file for the gps data and frame timestamps
+        self.gps_filename = savedir + "/gps_data.txt"
+        self.gps_file = open(self.gps_filename, 'w')
+
+        self.frames_filename = savedir + "/frame_timestamps.txt"
+        self.frames_file = open(self.frames_filename, 'w')
+
+        # open up a video file to write frames to
+        self.video_filename = savedir + "/video.mkv"
+        self.video_output_params = {
+            '-vcodec': 'ffv1',      # codec
+        }
+        self.video_writer = skvideo.io.FFmpegWriter(self.video_filename, outputdict=self.video_output_params)
+    
+    def save(self, gps_data, frame, frame_ts):
+        """ saves gps data and video frame with timestamps """
+        # save the gps data
+        # gps_data_str = "-----------\n"
+        gps_data_str = ""
+        for key in gps_data:
+            gps_data_str += str(key) + ","
+            gps_data_str += str(gps_data[key][0]) + ","
+            gps_data_str += str(gps_data[key][1]) + "\n"
+        self.gps_file.write(gps_data_str)
+
+        # save the frame timestamp
+        self.frames_file.write(str(frame_ts) + "\n")
+
+        # save the video frame
+        self.video_writer.writeFrame(frame) # this will be color swapped, but avoids extra processing
+
+        # flush buffer to disk
+        self.gps_file.flush()
+        self.frames_file.flush()
+
+
 class DroneState:
     def __init__(self):
         """ 
@@ -128,6 +173,13 @@ if __name__ == "__main__":
     atr_cfg_names = utils.getEnv("XATR_CONFIG_NAMES")
     yaml_config_path = utils.getEnv("APP_CONFIG")
 
+    save_playback_data_flag = utils.getEnv("RECORDING_ON", default=False)
+    recorder = None
+    if save_playback_data_flag:
+        recording_dir = utils.getEnv("RECORDING_FOLDER")
+        recorder = DataRecorder(recording_dir)
+
+
     # load in the ATR and sigma packages
     mats.pkg.scan()
     stm = mats.pkg.create("XatrImagePipeline")
@@ -188,20 +240,21 @@ if __name__ == "__main__":
             gps_data = state.getData() # {key: [timestamp, data]}
 
             # run inference
-            input = sigma.service.image2input(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            contacts, _ = stm.process(input)
-            detection_dicts = build_detection_dicts(contacts, names)
+            # input = sigma.service.image2input(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            # contacts, _ = stm.process(input)
+            # detection_dicts = build_detection_dicts(contacts, names)
 
-            for detection in detection_dicts:
-                print(f"Queueing detection {detection['label']} to TAK")
-                sink_publisher.push(gps_data, detection)
+            # for detection in detection_dicts:
+            #     print(f"Queueing detection {detection['label']} to TAK")
+            #     sink_publisher.push(gps_data, detection)
+
+            # save to playback directory if the flag is set
+            if save_playback_data_flag:
+                recorder.save(gps_data, frame, now)
 
             # print and increment the frame counter
             frame_counter += 1
             print("Frame Count:", frame_counter)
 
 
-# TODO's
-# Possibly separate out data collect timestamps
-# add timestamps to the MAV listener interface side for more accurate readings
 

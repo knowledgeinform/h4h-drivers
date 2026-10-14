@@ -11,7 +11,6 @@ import time
 from pymavlink import mavutil
 
 import commons.math_lib as mlib
-import commons.utils_lib as utils
 import commons.thread_lib2 as tlib2
 
 

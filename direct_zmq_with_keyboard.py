@@ -89,6 +89,7 @@ if __name__ == "__main__":
 			for action in action_list.actions:
 				if action_list.actions[action].trigger():
 					action_strs.append(action)
+					print("Triggering Action:", action)
 
 			# update the output message
 			msg["movement"]["linear"] = lin_vec

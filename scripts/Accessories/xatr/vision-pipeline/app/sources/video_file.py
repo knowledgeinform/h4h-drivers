@@ -18,7 +18,17 @@ class VideoFileSource(FrameSource):
     def read(self):
         if self.cap is None:
             raise RuntimeError("Video file not opened")
-        return self.cap.read()
+
+        # pre-read a frame to check for end
+        ret,frame = self.cap.read()
+
+        # rewind if at end
+        if not ret:
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            return self.cap.read()
+        
+        # return back data
+        return ret,frame
 
     def close(self) -> None:
         if self.cap is not None:

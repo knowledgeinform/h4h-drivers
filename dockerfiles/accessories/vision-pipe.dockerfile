@@ -98,6 +98,7 @@ COPY scripts/Accessories/xatr/vision-pipeline/requirements.txt requirements.txt
 
 # install python dependencies
 RUN pip install -r requirements.txt
+RUN pip install scikit-video
 
 # copy the vision pipeline files
 COPY scripts/Accessories/xatr/vision-pipeline vision-pipeline

@@ -76,15 +76,22 @@ def getEnv(env_str:str, default=None, cast=None) -> Any:
 	else: 
 		# raise a KeyError if missing
 		value = os.environ[env_str]
-	
+
 	# cast to the specified type
 	if cast is not None:
+		# special case for bools
+		if cast is bool:
+			return value == "True" or value == "true"
 		return cast(value)
+
 	elif default is not None:
+		# special case for bools
+		if type(default) is bool:
+			return value == "True" or value == "true"
 		return type(default)(value)
+
 	else:
 		return value
-
 
 # clears and rebuilds folder
 def clearMakeNewFolder(folder_path):

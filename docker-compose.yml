@@ -2,65 +2,65 @@ services:
 
   ### Controller Interfaces ###
 
-  zmq-input-1:
-    image: zmq-input:${DOCKER_IMAGE_TAG}
-    build:
-      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
-      args:
-        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
-    restart: no
-    network_mode: host
-    ipc: host
-    environment:
-      PRIORITY: 1
-      ZMQ_IP: "192.168.168.27" #  UCC
-      ZMQ_PORT: 5551
-      CONTROL_RATE_HZ: 10
+  # zmq-input-1:
+  #   image: zmq-input:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     PRIORITY: 1
+  #     ZMQ_IP: "192.168.168.27" #  UCC
+  #     ZMQ_PORT: 5551
+  #     CONTROL_RATE_HZ: 10
 
-  zmq-input-2:
-    image: zmq-input:${DOCKER_IMAGE_TAG}
-    build:
-      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
-      args:
-        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
-    restart: no
-    network_mode: host
-    ipc: host
-    environment:
-      PRIORITY: 1
-      ZMQ_IP: "192.168.168.27" #  UCC
-      ZMQ_PORT: 5552
-      CONTROL_RATE_HZ: 10
+  # zmq-input-2:
+  #   image: zmq-input:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     PRIORITY: 1
+  #     ZMQ_IP: "192.168.168.27" #  UCC
+  #     ZMQ_PORT: 5552
+  #     CONTROL_RATE_HZ: 10
 
-  zmq-input-3:
-    image: zmq-input:${DOCKER_IMAGE_TAG}
-    build:
-      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
-      args:
-        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
-    restart: no
-    network_mode: host
-    ipc: host
-    environment:
-      PRIORITY: 1
-      ZMQ_IP: "192.168.168.27" #  UCC
-      ZMQ_PORT: 5553
-      CONTROL_RATE_HZ: 10
+  # zmq-input-3:
+  #   image: zmq-input:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     PRIORITY: 1
+  #     ZMQ_IP: "192.168.168.27" #  UCC
+  #     ZMQ_PORT: 5553
+  #     CONTROL_RATE_HZ: 10
 
-  zmq-input-4:
-    image: zmq-input:${DOCKER_IMAGE_TAG}
-    build:
-      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
-      args:
-        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
-    restart: no
-    network_mode: host
-    ipc: host
-    environment:
-      PRIORITY: 1
-      ZMQ_IP: "192.168.168.27" #  UCC
-      ZMQ_PORT: 5554
-      CONTROL_RATE_HZ: 10
+  # zmq-input-4:
+  #   image: zmq-input:${DOCKER_IMAGE_TAG}
+  #   build:
+  #     dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+  #     args:
+  #       IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+  #   restart: no
+  #   network_mode: host
+  #   ipc: host
+  #   environment:
+  #     PRIORITY: 1
+  #     ZMQ_IP: "192.168.168.27" #  UCC
+  #     ZMQ_PORT: 5554
+  #     CONTROL_RATE_HZ: 10
 
   keyboard-debug-input:
     image: zmq-input:${DOCKER_IMAGE_TAG}
@@ -77,6 +77,20 @@ services:
       CONTROL_RATE_HZ: 10
       ZMQ_IP: "127.0.0.1" # Local Keyboard Test
 
+  keyboard-debug-input-2:
+    image: zmq-input:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/controllers/zmq_input.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    restart: no
+    network_mode: host
+    ipc: host
+    environment:
+      PRIORITY: 1
+      ZMQ_PORT: 5582
+      CONTROL_RATE_HZ: 10
+      ZMQ_IP: "127.0.0.1" # Local Keyboard Test
 
   ### Vehicle Interfaces
 
@@ -92,7 +106,7 @@ services:
     ipc: host
     environment:
       ROS_NAMESPACE: "h4h_rad_c100"
-      MAV_ADDRESS: "udpin:0.0.0.0:14552" # serial or IP address # udpin:0.0.0.0:14550 is specifically how QGC connects to things
+      MAV_ADDRESS: "udpin:0.0.0.0:14542" # serial or IP address # udpin:0.0.0.0:14550 is specifically how QGC connects to things
       MAX_HORIZ_SPEED: 1000 # no unit [0,1000]
       MAX_VERT_SPEED: 500 # no unit [0,500]
       MAX_TURN_SPEED: 800 # no unit [0,1000]  
@@ -115,7 +129,7 @@ services:
     ipc: host
     environment:
       ROS_NAMESPACE: "h4h_rad_teal"
-      MAV_ADDRESS: "udpin:0.0.0.0:14562" # serial or IP address # udpin:0.0.0.0:14550 is specifically how QGC connects to things
+      MAV_ADDRESS: "udpin:0.0.0.0:14541" # serial or IP address # udpin:0.0.0.0:14550 is specifically how QGC connects to things
       MAX_HORIZ_SPEED: 1000 # no unit [0,1000]
       MAX_VERT_SPEED: 500 # no unit [0,500]
       MAX_TURN_SPEED: 800 # no unit [0,1000]  
@@ -291,35 +305,38 @@ services:
   #   volumes:
   #     - .:/home/cotMsg_ws
 
-  vision-pipeline-rtsp:
-      image: vision-pipe
-      build:
-          dockerfile: dockerfiles/accessories/vision-pipe.dockerfile
-      command: /bin/bash -c "source /opt/XATR/xatr.env; cd vision-pipeline; python3 main.py"
-      restart: no
-      network_mode: host
-      runtime: nvidia
-      ipc: host
-      tty: true
-      stdin_open: true
-      environment:
-          STATUS_PORT: 5591
-          ATAK_IP_ADDRESS: "192.168.1.123"
-          ATAK_PORT: 8087
-          # APP_CONFIG: "configs/remote-rtsp-teal.yaml"
-          # APP_CONFIG: "configs/remote-rtsp-c100.yaml"
-          APP_CONFIG: "configs/remote-rtsp.yaml"
-          # APP_CONFIG: "configs/dummy-video-test.yaml"
-          XATR_CONFIG: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.atrcfg"
-          XATR_CONFIG_NAMES: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.names"
-      volumes:
-        - /tmp:/tmp
-        - ./scripts/Accessories/xatr/vision-pipeline/configs:/xatr_opencv/opencv/build/vision-pipeline/configs/
-        - ./XATR/config:/opt/XATR/config
-        - ./dummy_ordinance.avi:/xatr_opencv/opencv/build/vision-pipeline/dummy_ordinance.avi
-      devices:
-        - /dev/nvhost-nvdec
-        - /dev/nvhost-vic
+  # vision-pipeline-rtsp:
+  #     image: vision-pipe
+  #     build:
+  #         dockerfile: dockerfiles/accessories/vision-pipe.dockerfile
+  #     command: /bin/bash -c "source /opt/XATR/xatr.env; cd vision-pipeline; python3 main.py"
+  #     restart: no
+  #     network_mode: host
+  #     runtime: nvidia
+  #     ipc: host
+  #     tty: true
+  #     stdin_open: true
+  #     environment:
+  #         STATUS_PORT: 5591
+  #         ATAK_IP_ADDRESS: "192.168.1.123"
+  #         ATAK_PORT: 8087
+  #         # APP_CONFIG: "configs/remote-rtsp-teal.yaml"
+  #         # APP_CONFIG: "configs/remote-rtsp-c100.yaml"
+  #         # APP_CONFIG: "configs/remote-rtsp.yaml"
+  #         APP_CONFIG: "configs/dummy-video-test.yaml"
+  #         XATR_CONFIG: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.atrcfg"
+  #         XATR_CONFIG_NAMES: "/opt/XATR/config/90EFF648-F068-42A5-84EB-900961C2ADDE.names"
+  #         RECORDING_ON: "True"
+  #         RECORDING_FOLDER: "vision-pipe-recordings"
+  #     volumes:
+  #       - /tmp:/tmp
+  #       - ./scripts/Accessories/xatr/vision-pipeline/configs:/xatr_opencv/opencv/build/vision-pipeline/configs/
+  #       - ./XATR/config:/opt/XATR/config
+  #       - ./dummy_ordinance_vid.avi:/xatr_opencv/opencv/build/vision-pipeline/dummy_ordinance.avi
+  #       - ./vision-pipe-recordings:/xatr_opencv/opencv/build/vision-pipeline/vision-pipe-recordings
+  #     devices:
+  #       - /dev/nvhost-nvdec
+  #       - /dev/nvhost-vic
 
   # vision-pipeline-videofile:
   #     image: vision-pipe
@@ -351,11 +368,32 @@ services:
       dockerfile: dockerfiles/h4h-sim-base.dockerfile
       args:
         IMAGE_TAG: ${DOCKER_IMAGE_TAG}
-    command: /bin/bash -c "cd PX4-Autopilot; make px4_sitl gz_x500"
+    # command: /bin/bash -c "cd PX4-Autopilot; make px4_sitl gz_x500"
+    command: /bin/bash -c "cd PX4-Autopilot; PX4_SYS_AUTOSTART=4001 PX4_SIM_MODEL=gz_x500 ./build/px4_sitl_default/bin/px4 -i 1"
     restart: no
     network_mode: host
     ipc: host
-    runtime: nvidia # comment this out for machines that don't have nvidia gpu's
+    # runtime: nvidia # comment this out for machines that don't have nvidia gpu's
+    environment:
+      NVIDIA_VISIBLE_DEVICES: all
+      NVIDIA_DRIVER_CAPABILITIES: all
+      DISPLAY: ":1"
+    profiles: ["sim"]
+
+  # this container spins up a PX4 SITL (connect via QGCS)
+  # it rebuilds the SITL code every time it spins up so it's very slow to start
+  h4h-px4-sim-2:
+    image: h4h-sim-base:${DOCKER_IMAGE_TAG}
+    build:
+      dockerfile: dockerfiles/h4h-sim-base.dockerfile
+      args:
+        IMAGE_TAG: ${DOCKER_IMAGE_TAG}
+    # command: /bin/bash -c "cd PX4-Autopilot; make px4_sitl gz_x500"
+    command: /bin/bash -c "cd PX4-Autopilot; PX4_GZ_STANDALONE=1 PX4_SYS_AUTOSTART=4001 PX4_GZ_MODEL_POSE="0,1" PX4_SIM_MODEL=gz_x500 ./build/px4_sitl_default/bin/px4 -i 2"
+    restart: no
+    network_mode: host
+    ipc: host
+    # runtime: nvidia # comment this out for machines that don't have nvidia gpu's
     environment:
       NVIDIA_VISIBLE_DEVICES: all
       NVIDIA_DRIVER_CAPABILITIES: all

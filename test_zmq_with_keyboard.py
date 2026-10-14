@@ -24,11 +24,11 @@ if __name__ == "__main__":
 	blank = np.zeros((300,300,3), np.uint8)
 
 	# set up a zmq publisher (as host)
-	publisher = zlib.SimpleZMQPublisher(port="5581")
+	publisher = zlib.SimpleZMQPublisher(port="5582") # 5582 for teal
 
 	# set target vehicle
-	target_name = "h4h_rad_c100"
-	# target_name = "h4h_rad_teal"
+	# target_name = "h4h_rad_c100"
+	target_name = "h4h_rad_teal"
 	# target_name = "h4h_mtrs_chassis"
 
 	# set up controller
